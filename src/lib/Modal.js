@@ -1,29 +1,19 @@
 import React from "react";
 
-const Modal = ({ children, isOpen, setOpen, title, action = null }) => {
+const Modal = ({ children, isOpen, setOpen, title }) => {
   return (
-    <div class={`modal ${isOpen && "is-active"}`}>
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">{title}</p>
+    <div className={`modal ${isOpen && "is-active"}`}>
+      <div className="modal-background"></div>
+      <div className="modal-card">
+        <header className="modal-card-head">
+          <p className="modal-card-title">{title}</p>
           <button
-            class="delete"
+            className="delete"
             aria-label="close"
             onClick={() => setOpen(false)}
           ></button>
         </header>
-        <section class="modal-card-body">{children}</section>
-        <footer class="modal-card-foot">
-          {action !== null && (
-            <button class="button is-success" onClick={action}>
-              Save changes
-            </button>
-          )}
-          <button class="button" onClick={() => setOpen(false)}>
-            Cancel
-          </button>
-        </footer>
+        <section className="modal-card-body">{children}</section>
       </div>
     </div>
   );
