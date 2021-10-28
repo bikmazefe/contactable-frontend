@@ -1,0 +1,27 @@
+.App {
+    max-width: 980px;
+    margin: 60px auto;
+}
+
+.form-wrapper {
+    max-width: 480px;
+    margin: 200px auto 0 auto;
+}
+
+.demo-msg {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: showDemoMsg 0.8s forwards;
+    bottom: 50px;
+}
+
+@keyframes showDemoMsg {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
