@@ -1,6 +1,6 @@
 .App {
     max-width: 980px;
-    margin: 60px auto;
+    margin: 30px auto;
 }
 
 .form-wrapper {
@@ -14,6 +14,20 @@
     transform: translateX(-50%);
     animation: showDemoMsg 0.8s forwards;
     bottom: 50px;
+}
+
+.phonebook {
+    overflow-y: hidden;
+}
+
+.phonebook__content {
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-background {
+    background-color: rgba(0, 0, 0, 0.11) !important;
 }
 
 @keyframes showDemoMsg {

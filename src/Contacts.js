@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router";
 import { useAuth } from "./lib/AuthContext";
+import axios from "axios";
+import { getInitials, search } from "./lib/contactHelpers";
+import Contact from "./components/Contact";
 
 const Contacts = () => {
+  const [contacts, setContacts] = useState({});
+  const [query, setQuery] = useState("");
+
   const { currentUser } = useAuth();
   const history = useHistory();
 
@@ -12,62 +18,57 @@ const Contacts = () => {
       toast.error("You need to login!");
       history.push("/login");
     }
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/contacts`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setContacts({ ...res.data });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   return (
-    <nav className="panel is-primary">
-      <p className="panel-heading">Repositories</p>
+    <nav className="panel is-primary phonebook">
+      <p className="panel-heading">My Contacts</p>
       <div className="panel-block">
         <p className="control has-icons-left">
-          <input className="input" type="text" placeholder="Search" />
+          <input
+            className="input is-primary"
+            type="text"
+            placeholder="Search by name, phone or email..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
           <span className="icon is-left">
             <i className="fas fa-search" aria-hidden="true"></i>
           </span>
         </p>
       </div>
       <p className="panel-tabs">
-        <a className="is-active">All</a>
-        <a>Public</a>
-        <a>Private</a>
-        <a>Sources</a>
-        <a>Forks</a>
+        {getInitials(contacts).map((initial) => (
+          <a key={initial}>{initial}</a>
+        ))}
       </p>
-      <a className="panel-block is-active">
-        <span className="panel-icon">
-          <i className="fas fa-book" aria-hidden="true"></i>
-        </span>
-        bulma
-      </a>
-      <a className="panel-block">
-        <span className="panel-icon">
-          <i className="fas fa-book" aria-hidden="true"></i>
-        </span>
-        marksheet
-      </a>
-      <a className="panel-block">
-        <span className="panel-icon">
-          <i className="fas fa-book" aria-hidden="true"></i>
-        </span>
-        minireset.css
-      </a>
-      <a className="panel-block">
-        <span className="panel-icon">
-          <i className="fas fa-book" aria-hidden="true"></i>
-        </span>
-        jgthms.github.io
-      </a>
-      <a className="panel-block">
-        <span className="panel-icon">
-          <i className="fas fa-code-branch" aria-hidden="true"></i>
-        </span>
-        daniellowtw/infboard
-      </a>
-      <a className="panel-block">
-        <span className="panel-icon">
-          <i className="fas fa-code-branch" aria-hidden="true"></i>
-        </span>
-        mojs
-      </a>
+      <div className="phonebook__content p-2">
+        {Object.entries(contacts).map((contact, index) => (
+          <>
+            {!query.length && (
+              <h3
+                className="subtitle is-5 mt-2 mb-3 ml-3 has-text-primary"
+                key={`title${index}`}
+              >
+                {contact[0]}
+              </h3>
+            )}
+            {search(contact[1], query).map((contact) => (
+              <Contact contact={contact} />
+            ))}
+          </>
+        ))}
+      </div>
     </nav>
   );
 };
