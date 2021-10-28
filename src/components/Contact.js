@@ -1,22 +1,23 @@
 import React from "react";
 
-const Contact = ({ contact, setEditOpen, setSelectedContact, setHistoryOpen }) => {
-
+const Contact = ({
+  contact,
+  setEditOpen,
+  setSelectedContact,
+  setHistoryOpen,
+}) => {
   function handleEditClick() {
     setSelectedContact(contact);
     setEditOpen(true);
   }
-  
-  function handleHistoryClick(){
+
+  function handleHistoryClick() {
     setSelectedContact(contact);
     setHistoryOpen(true);
   }
 
   return (
-    <span
-      key={contact["id"]}
-      className="panel-block columns is-flex is-justify-content-space-between"
-    >
+    <span className="panel-block columns is-flex is-justify-content-space-between">
       <div className="column is-flex isv-centered is-four-fifths">
         <span className="panel-icon">
           <i className="fas fa-address-book fa-2x m-auto"></i>

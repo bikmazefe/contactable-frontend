@@ -3,10 +3,11 @@ import toast from "react-hot-toast";
 import { useHistory } from "react-router";
 import { useAuth } from "./lib/AuthContext";
 import axios from "axios";
-import { getInitials, search } from "./lib/contactHelpers";
+import { search } from "./lib/contactHelpers";
 import Contact from "./components/Contact";
 import Edit from "./components/Edit";
 import History from "./components/History";
+import Alphabet from "./components/Alphabet";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState({});
@@ -56,11 +57,7 @@ const Contacts = () => {
             </span>
           </p>
         </div>
-        <p className="panel-tabs">
-          {getInitials(contacts).map((initial) => (
-            <a key={initial}>{initial}</a>
-          ))}
-        </p>
+        <Alphabet contacts={contacts} />
         <div className="phonebook__content p-2">
           {Object.entries(contacts).map((contact, index) => (
             <>
@@ -68,6 +65,7 @@ const Contacts = () => {
                 <h3
                   className="subtitle is-5 mt-2 mb-3 ml-3 has-text-primary"
                   key={`title${index}`}
+                  id={`title${contact[0]}`}
                 >
                   {contact[0]}
                 </h3>
