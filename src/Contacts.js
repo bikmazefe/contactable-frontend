@@ -1,57 +1,70 @@
-import React from "react";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useHistory } from "react-router";
+import { useAuth } from "./lib/AuthContext";
 
 const Contacts = () => {
+  const { currentUser } = useAuth();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!currentUser) {
+      toast.error("You need to login!");
+      history.push("/login");
+    }
+  }, []);
+
   return (
-    <nav class="panel is-primary">
-      <p class="panel-heading">Repositories</p>
-      <div class="panel-block">
-        <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Search" />
-          <span class="icon is-left">
-            <i class="fas fa-search" aria-hidden="true"></i>
+    <nav className="panel is-primary">
+      <p className="panel-heading">Repositories</p>
+      <div className="panel-block">
+        <p className="control has-icons-left">
+          <input className="input" type="text" placeholder="Search" />
+          <span className="icon is-left">
+            <i className="fas fa-search" aria-hidden="true"></i>
           </span>
         </p>
       </div>
-      <p class="panel-tabs">
-        <a class="is-active">All</a>
+      <p className="panel-tabs">
+        <a className="is-active">All</a>
         <a>Public</a>
         <a>Private</a>
         <a>Sources</a>
         <a>Forks</a>
       </p>
-      <a class="panel-block is-active">
-        <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+      <a className="panel-block is-active">
+        <span className="panel-icon">
+          <i className="fas fa-book" aria-hidden="true"></i>
         </span>
         bulma
       </a>
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+      <a className="panel-block">
+        <span className="panel-icon">
+          <i className="fas fa-book" aria-hidden="true"></i>
         </span>
         marksheet
       </a>
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+      <a className="panel-block">
+        <span className="panel-icon">
+          <i className="fas fa-book" aria-hidden="true"></i>
         </span>
         minireset.css
       </a>
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+      <a className="panel-block">
+        <span className="panel-icon">
+          <i className="fas fa-book" aria-hidden="true"></i>
         </span>
         jgthms.github.io
       </a>
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-code-branch" aria-hidden="true"></i>
+      <a className="panel-block">
+        <span className="panel-icon">
+          <i className="fas fa-code-branch" aria-hidden="true"></i>
         </span>
         daniellowtw/infboard
       </a>
-      <a class="panel-block">
-        <span class="panel-icon">
-          <i class="fas fa-code-branch" aria-hidden="true"></i>
+      <a className="panel-block">
+        <span className="panel-icon">
+          <i className="fas fa-code-branch" aria-hidden="true"></i>
         </span>
         mojs
       </a>
