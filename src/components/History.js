@@ -14,6 +14,8 @@ const History = ({ contact, isOpen, setOpen }) => {
         )
         .then((res) => setLogs(res.data.logs));
     }
+
+    return () => setLogs([])
   }, [isOpen]);
 
   return (
@@ -27,8 +29,8 @@ const History = ({ contact, isOpen, setOpen }) => {
             </tr>
           </thead>
           <tbody>
-            {logs.map((log) => (
-              <tr key={`log${log.id}`}>
+            {logs.map((log, index) => (
+              <tr key={`log${index}`}>
                 <td>{log.event}</td>
                 <td>{log.timestamp}</td>
               </tr>
