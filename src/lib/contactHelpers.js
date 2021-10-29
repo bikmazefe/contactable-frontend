@@ -18,7 +18,7 @@ function search(list, query) {
 
 // exclude non-string values and timestamps
 function includeInSearch(val) {
-  return typeof val == "string" && new Date(val) === "Invalid Date";
+  return typeof val == "string" && new Date(val) == "Invalid Date";
 }
 
 export { getInitials, search };
