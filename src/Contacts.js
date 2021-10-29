@@ -15,6 +15,8 @@ const Contacts = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+
+  
   const { currentUser } = useAuth();
   const history = useHistory();
 
@@ -77,6 +79,7 @@ const Contacts = () => {
                   setEditOpen={setEditOpen}
                   setSelectedContact={setSelectedContact}
                   setHistoryOpen={setHistoryOpen}
+                  fetchData={fetchData}
                 />
               ))}
             </>

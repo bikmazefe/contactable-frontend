@@ -1,10 +1,13 @@
+import axios from "axios";
 import React from "react";
+import toast from "react-hot-toast";
 
 const Contact = ({
   contact,
   setEditOpen,
   setSelectedContact,
   setHistoryOpen,
+  fetchData,
 }) => {
   function handleEditClick() {
     setSelectedContact(contact);
@@ -14,6 +17,23 @@ const Contact = ({
   function handleHistoryClick() {
     setSelectedContact(contact);
     setHistoryOpen(true);
+  }
+
+  function handleDeleteClick(id) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this contact?"
+    );
+    if (confirmed) {
+      axios
+        .delete(`${process.env.REACT_APP_BACKEND_URL}/api/v1/contacts/${id}`, {
+          withCredentials: true,
+        })
+        .then(() => {
+          toast.success("Contact deleted.");
+          fetchData();
+        })
+        .catch((err) => console.error(err));
+    }
   }
 
   return (
@@ -47,7 +67,11 @@ const Contact = ({
         >
           <i className="far fa-edit"></i>
         </a>
-        <a className="has-text-grey ml-2" title="Delete">
+        <a
+          className="has-text-grey ml-2"
+          title="Delete"
+          onClick={() => handleDeleteClick(contact.id)}
+        >
           <i className="fas fa-trash-alt"></i>
         </a>
       </div>
