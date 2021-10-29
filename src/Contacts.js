@@ -8,15 +8,16 @@ import Contact from "./components/Contact";
 import Edit from "./components/Edit";
 import History from "./components/History";
 import Alphabet from "./components/Alphabet";
+import New from "./components/New";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState({});
   const [query, setQuery] = useState("");
   const [selectedContact, setSelectedContact] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
+  const [newOpen, setNewOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
 
-  
   const { currentUser } = useAuth();
   const history = useHistory();
 
@@ -44,7 +45,12 @@ const Contacts = () => {
   return (
     <>
       <nav className="panel is-primary phonebook">
-        <p className="panel-heading">My Contacts</p>
+        <p className="panel-heading is-flex is-justify-content-space-between is-align-items-center">
+          My Contacts
+          <button className="button is-info" onClick={() => setNewOpen(true)}>
+            New Contact
+          </button>
+        </p>
         <div className="panel-block">
           <p className="control has-icons-left">
             <input
@@ -97,6 +103,7 @@ const Contacts = () => {
         isOpen={historyOpen}
         setOpen={setHistoryOpen}
       />
+      <New fetchData={fetchData} isOpen={newOpen} setOpen={setNewOpen} />
     </>
   );
 };

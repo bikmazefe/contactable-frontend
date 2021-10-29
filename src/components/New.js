@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useState } from "react/cjs/react.development";
 import Modal from "../lib/Modal";
 import Form from "./Form";
 
-const Edit = ({ contact = null, isOpen, setOpen, fetchData }) => {
+const New = ({ fetchData, isOpen, setOpen }) => {
   const [inputs, setInputs] = useState({
     email: "",
     phone: "",
@@ -20,21 +21,21 @@ const Edit = ({ contact = null, isOpen, setOpen, fetchData }) => {
     setErrors({});
 
     axios
-      .patch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/v1/contacts/${contact.id}`,
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/contacts`,
         { contact: inputs },
         { withCredentials: true }
       )
       .then(() => {
         setLoading(false);
-        toast.success("Contact updated!");
         setOpen(false);
+        toast.success("Contact created!");
         fetchData();
       })
       .catch((err) => {
         setLoading(false);
         console.error(err);
-        toast.error("Contact could not be updated.");
+        toast.error("Contact could not be created.");
         setErrors(err.response.data.errors);
       });
   }
@@ -46,23 +47,20 @@ const Edit = ({ contact = null, isOpen, setOpen, fetchData }) => {
     });
   }
 
+  function resetInputs() {
+    const empties = Object.keys(inputs).map((key) => [key, ""]);
+    setInputs(Object.fromEntries(empties));
+  }
+
   useEffect(() => {
-    if (contact) {
-      setInputs({
-        email: contact.email,
-        phone: contact.phone,
-        first_name: contact.first_name,
-        last_name: contact.last_name,
-      });
-    }
-
-    return () => setErrors({});
-  }, [isOpen, contact]);
-
-  if (!isOpen) return null;
+    return () => {
+      resetInputs();
+      setErrors({});
+    };
+  }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} setOpen={setOpen} title="Edit Contact">
+    <Modal isOpen={isOpen} setOpen={setOpen} title="New Contact">
       <Form
         handleSubmit={handleSubmit}
         handleChange={handleChange}
@@ -74,4 +72,4 @@ const Edit = ({ contact = null, isOpen, setOpen, fetchData }) => {
   );
 };
 
-export default Edit;
+export default New;
